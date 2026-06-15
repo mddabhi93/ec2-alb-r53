@@ -14,6 +14,12 @@ on:
       - 'modules/**'
       - '.github/workflows/terraform.yml'
   workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Apply Terraform changes'
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   id-token: write
@@ -73,7 +79,7 @@ jobs:
 
   apply:
     needs: plan
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' && inputs.deploy == true
     runs-on: ubuntu-latest
     environment:
       name: dev-apply
