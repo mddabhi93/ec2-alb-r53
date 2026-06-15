@@ -59,7 +59,7 @@ In GitHub, create a repository variable or secret for the role ARN:
 - Name: AWS_ROLE_ARN
 - Value: arn:aws:iam::<ACCOUNT_ID>:role/<ROLE_NAME>
 
-If you store it as a secret, the workflow will still pick it up automatically.
+If you store it as a secret, the workflow will still pick it up automatically. The workflow uses the GitHub environment named dev-apply for both plan and apply, so you can also store the value as an environment-scoped variable or secret for that environment.
 
 ## 4. Update the workflow
 

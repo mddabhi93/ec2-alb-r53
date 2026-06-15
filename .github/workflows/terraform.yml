@@ -22,6 +22,8 @@ permissions:
 jobs:
   plan:
     runs-on: ubuntu-latest
+    environment:
+      name: dev-apply
     defaults:
       run:
         working-directory: environments/dev
