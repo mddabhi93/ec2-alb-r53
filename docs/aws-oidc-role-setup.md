@@ -21,7 +21,10 @@ Create a role with trust policy similar to the following:
           "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
         },
         "StringLike": {
-          "token.actions.githubusercontent.com:sub": "repo:<OWNER>/<REPO>:ref:refs/heads/main"
+          "token.actions.githubusercontent.com:sub": [
+            "repo:<OWNER>/<REPO>:ref:refs/heads/main",
+            "repo:<OWNER>/<REPO>:pull_request"
+          ]
         }
       }
     }
@@ -29,7 +32,7 @@ Create a role with trust policy similar to the following:
 }
 ```
 
-If you want to allow pull requests too, use a condition like:
+If you want to allow all branches, tags, and pull requests, use a broader condition like:
 
 ```json
 "token.actions.githubusercontent.com:sub": "repo:<OWNER>/<REPO>:*"
@@ -56,13 +59,15 @@ In GitHub, create a repository variable or secret for the role ARN:
 - Name: AWS_ROLE_ARN
 - Value: arn:aws:iam::<ACCOUNT_ID>:role/<ROLE_NAME>
 
+If you store it as a secret, the workflow will still pick it up automatically.
+
 ## 4. Update the workflow
 
 Use the role ARN from GitHub Actions:
 
 ```yaml
 with:
-  role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+  role-to-assume: ${{ vars.AWS_ROLE_ARN || secrets.AWS_ROLE_ARN }}
   aws-region: us-east-1
 ```
 
