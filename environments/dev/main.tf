@@ -24,11 +24,11 @@ provider "aws" {
 module "networking" {
   source = "../../modules/networking"
 
-  aws_region         = var.aws_region
-  environment        = var.environment
-  project_name       = var.project_name
-  vpc_cidr           = var.vpc_cidr
-  public_subnet_cidrs = var.public_subnet_cidrs
+  aws_region           = var.aws_region
+  environment          = var.environment
+  project_name         = var.project_name
+  vpc_cidr             = var.vpc_cidr
+  public_subnet_cidrs  = var.public_subnet_cidrs
   private_subnet_cidrs = var.private_subnet_cidrs
 }
 
@@ -51,24 +51,24 @@ module "iam" {
 module "compute" {
   source = "../../modules/compute"
 
-  environment            = var.environment
-  project_name           = var.project_name
-  instance_type          = var.instance_type
-  private_subnet_id      = module.networking.private_subnet_ids[0]
-  ec2_security_group_id  = module.security.ec2_security_group_id
-  instance_profile_name  = module.iam.instance_profile_name
+  environment           = var.environment
+  project_name          = var.project_name
+  instance_type         = var.instance_type
+  private_subnet_id     = module.networking.private_subnet_ids[0]
+  ec2_security_group_id = module.security.ec2_security_group_id
+  instance_profile_name = module.iam.instance_profile_name
 }
 
 module "alb" {
   source = "../../modules/alb"
 
-  environment            = var.environment
-  project_name           = var.project_name
-  vpc_id                 = module.networking.vpc_id
-  public_subnet_ids      = module.networking.public_subnet_ids
-  alb_security_group_id  = module.security.alb_security_group_id
-  instance_id            = module.compute.instance_id
-  acm_certificate_arn    = var.acm_certificate_arn
+  environment           = var.environment
+  project_name          = var.project_name
+  vpc_id                = module.networking.vpc_id
+  public_subnet_ids     = module.networking.public_subnet_ids
+  alb_security_group_id = module.security.alb_security_group_id
+  instance_id           = module.compute.instance_id
+  acm_certificate_arn   = var.acm_certificate_arn
 }
 
 module "dns" {
