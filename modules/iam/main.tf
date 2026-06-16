@@ -18,6 +18,10 @@ resource "aws_iam_role" "ssm" {
   tags = {
     Name = "${var.project_name}-${var.environment}-ssm-role"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "ssm_core" {
@@ -28,4 +32,8 @@ resource "aws_iam_role_policy_attachment" "ssm_core" {
 resource "aws_iam_instance_profile" "ssm" {
   name = "${var.project_name}-${var.environment}-instance-profile"
   role = aws_iam_role.ssm.name
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }

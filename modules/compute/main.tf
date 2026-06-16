@@ -29,4 +29,8 @@ resource "aws_instance" "app" {
   tags = {
     Name = "${var.project_name}-${var.environment}-app"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }

@@ -8,6 +8,10 @@ resource "aws_lb" "this" {
   tags = {
     Name = "${var.project_name}-${var.environment}-alb"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_lb_target_group" "this" {
@@ -28,6 +32,10 @@ resource "aws_lb_target_group" "this" {
 
   tags = {
     Name = "${var.project_name}-${var.environment}-tg"
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 }
 

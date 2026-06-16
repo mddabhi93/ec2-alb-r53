@@ -10,6 +10,10 @@ resource "aws_vpc" "this" {
   tags = {
     Name = "${var.project_name}-${var.environment}-vpc"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_subnet" "public" {
@@ -22,6 +26,10 @@ resource "aws_subnet" "public" {
   tags = {
     Name = "${var.project_name}-${var.environment}-public-${count.index + 1}"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_subnet" "private" {
@@ -33,6 +41,10 @@ resource "aws_subnet" "private" {
   tags = {
     Name = "${var.project_name}-${var.environment}-private-${count.index + 1}"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_internet_gateway" "this" {
@@ -40,6 +52,10 @@ resource "aws_internet_gateway" "this" {
 
   tags = {
     Name = "${var.project_name}-${var.environment}-igw"
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 }
 

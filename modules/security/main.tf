@@ -27,6 +27,10 @@ resource "aws_security_group" "alb" {
   tags = {
     Name = "${var.project_name}-${var.environment}-alb-sg"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_security_group" "ec2" {
@@ -57,5 +61,9 @@ resource "aws_security_group" "ec2" {
 
   tags = {
     Name = "${var.project_name}-${var.environment}-app-sg"
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 }
